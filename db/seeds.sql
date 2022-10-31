@@ -3,7 +3,7 @@ VALUES  ("Engineering")
         ("Marketing"),
         ("Sales");
         
-INSERT INTO role (title, salary, department_id)
+INSERT INTO position (title, salary, department_id)
 VALUES  ("Senior Software Engineer", 145000, 1),
         ("Software Engineer", 105000, 1),
         ("Marketing Manager", 85000, 2),
@@ -11,7 +11,7 @@ VALUES  ("Senior Software Engineer", 145000, 1),
         ("Sales Manager", 120000, 3),
         ("Sales Specialist", 75000, 3);
 
-INSERT INTO employee (first_name, last_name, role_id)
+INSERT INTO employee (first_name, last_name, position_id)
 VALUES  ("Bradley", "McMullen", 1),
         ("Tina", "Burell", 2),
         ("Julio", "Alvarez", 2),
