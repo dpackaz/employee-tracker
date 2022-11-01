@@ -52,3 +52,10 @@ const addEmployee = [
         message: "Who is the new employee's manager?"
     },
 ];
+
+const updateEmployee = [
+    {
+        name: "new-position",
+        message: "What is the employee's new position?"
+    },
+];

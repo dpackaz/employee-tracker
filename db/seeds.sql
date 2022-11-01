@@ -11,7 +11,7 @@ VALUES  ("Senior Software Engineer", 145000, 1),
         ("Sales Manager", 120000, 3),
         ("Sales Specialist", 75000, 3);
 
-INSERT INTO employee (first_name, last_name, position_id)
+INSERT INTO employee (first_name, last_name, position_id, manager_id)
 VALUES  ("Bradley", "McMullen", 1),
         ("Tina", "Burell", 2),
         ("Julio", "Alvarez", 2),
