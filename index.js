@@ -1,7 +1,16 @@
 // packages needed for application
 const inquirer = require("inquirer");
-const fs = require("fs");
-const app = express();
+const cTable = require("console.table");
+const mysql = require("mysql2");
+
+const connectMysql = mysql.createConnection(
+    {
+        host: "localhost",
+        user: "root",
+        password: "password",
+        database: "employees_db"
+    },
+)
 
 const starterPrompt = [
     {
@@ -15,7 +24,7 @@ const starterPrompt = [
             "Add New Position",
             "View All Employees",
             "Add New Employee",
-            "Edit Existing Employee"
+            "Edit Employee Position"
             ]
     },
 ];
@@ -55,7 +64,13 @@ const addEmployee = [
 
 const updateEmployee = [
     {
+        name: "edit-employee",
+        message: "Which employee's position would you like to edit?"
+    },
+    {
         name: "new-position",
         message: "What is the employee's new position?"
     },
 ];
+
+// create a function that will begin the starter prompt
