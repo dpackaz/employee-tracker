@@ -102,7 +102,7 @@ const firstQuestion = () => {
 // view all departments function
 function viewDepartments() {
     connectMysql.query("SELECT * FROM department", function (err, res) {
-        console.table(res);
+        console.table(res[0]);
         firstQuestion()
     })
 }
@@ -111,7 +111,21 @@ function viewDepartments() {
 function viewPositions() {
     connectMysql.query(`SELECT position.title AS Position, position.position_id AS Position_Id, department_name AS Department, position.salary AS Salary FROM position JOIN department`,
     function (err, res) {
-        console.table(res);
+        console.table(res[0]);
         firstQuestion()
     })
+}
+
+// view all employees function
+function viewEmployees() {
+    connectMysql.query(`SELECT employee.employee_id AS ID, CONCAT(employee.first_name, ' ', employee.last_name) as Name, position.title AS Position, department.name AS Department, position.salary AS Salary, CONCAT(manager.first_name, ' ', manager.last_name) AS Manager FROM employee LEFT JOIN position on position.position_id = employee.position_id LEFT JOIN department ON department.department_id = position.department_id LEFT JOIN employee manager ON manager.employee_id = employee.manager_id`,
+    function (err, res) {
+        console.table(res[0]);
+        firstQuestion()
+    })
+}
+
+// exit function
+function exit() {
+    process.exit()
 }
