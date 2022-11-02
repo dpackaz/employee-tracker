@@ -75,7 +75,7 @@ const updateEmployee = [
     },
 ];
 
-// begin the starter prompt
+// begin the starter prompt and redirect to interactive functions
 const firstQuestion = () => {
     inquirer.createPromptModule(starterPrompt).then((response => {
         if (response.task === "View All Departments") {
@@ -99,9 +99,18 @@ const firstQuestion = () => {
 }
 
 
-// view all departments
+// view all departments function
 function viewDepartments() {
     connectMysql.query("SELECT * FROM department", function (err, res) {
+        console.table(res);
+        firstQuestion()
+    })
+}
+
+// view all positions function
+function viewPositions() {
+    connectMysql.query(`SELECT position.title AS Position, position.position_id AS Position_Id, department_name AS Department, position.salary AS Salary FROM position JOIN department`,
+    function (err, res) {
         console.table(res);
         firstQuestion()
     })
