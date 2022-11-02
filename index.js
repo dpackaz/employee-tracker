@@ -43,6 +43,23 @@ const addPosition = [
         name: "new-position",
         message: "What position would you like to add?"
     },
+    {
+        name: "new-salary",
+        message: "What is the new position's salary?"
+    },
+    {
+        type: "list",
+        name: "add-to-department",
+        message: "To what department do you want to add the new position?",
+        choices: function () {
+            let departmentArray = rows.map((choice) => ({
+                name: choice.department_name,
+                value: choice.department_id,
+            }));
+            console.log(departmentArray);
+            return departmentArray;
+        }
+    },
 ];
 
 const addEmployee = [
@@ -107,12 +124,30 @@ function viewDepartments() {
     })
 }
 
+// add department function
+function newDepartment() {
+    inquirer.prompt(addDepartment).then((response) => {
+        connectMysql.query(`INSERT INTO department(department_name) VALUES (?)`,
+        [response.departmentName])
+        console.log("Department Added Successfully!");
+        firstQuestion();
+    })
+}
+
 // view all positions function
 function viewPositions() {
     connectMysql.query(`SELECT position.title AS Position, position.position_id AS Position_Id, department_name AS Department, position.salary AS Salary FROM position JOIN department`,
     function (err, res) {
         console.table(res[0]);
+        if (err) throw err;
         firstQuestion()
+    })
+}
+
+// add position function
+function newPosition() {
+    connectMysql.query("SELECT * FROM department", (err, rows) => {
+        
     })
 }
 
@@ -121,6 +156,7 @@ function viewEmployees() {
     connectMysql.query(`SELECT employee.employee_id AS ID, CONCAT(employee.first_name, ' ', employee.last_name) as Name, position.title AS Position, department.name AS Department, position.salary AS Salary, CONCAT(manager.first_name, ' ', manager.last_name) AS Manager FROM employee LEFT JOIN position on position.position_id = employee.position_id LEFT JOIN department ON department.department_id = position.department_id LEFT JOIN employee manager ON manager.employee_id = employee.manager_id`,
     function (err, res) {
         console.table(res[0]);
+        if (err) throw err;
         firstQuestion()
     })
 }
