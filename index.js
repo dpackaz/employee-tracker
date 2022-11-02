@@ -10,7 +10,8 @@ const connectMysql = mysql.createConnection(
         password: "password",
         database: "employees_db"
     },
-)
+    console.log("Accessing Company Database...")
+);
 
 const starterPrompt = [
     {
@@ -24,7 +25,8 @@ const starterPrompt = [
             "Add New Position",
             "View All Employees",
             "Add New Employee",
-            "Edit Employee Position"
+            "Edit Employee Position",
+            "Exit"
             ]
     },
 ];
@@ -73,4 +75,34 @@ const updateEmployee = [
     },
 ];
 
-// create a function that will begin the starter prompt
+// begin the starter prompt
+const firstQuestion = () => {
+    inquirer.createPromptModule(starterPrompt).then((response => {
+        if (response.task === "View All Departments") {
+            viewDepartments();
+        } else if (response.task === "Add New Department") {
+            newDepartment();
+        } else if (response.task === "View All Positions") {
+            viewPositions();
+        } else if (response.task === "Add New Position") {
+            newPosition();
+        } else if (response.task === "View All Employees") {
+            viewEmployees();
+        } else if (response.task === "Add New Employee") {
+            newEmployee();
+        } else if (response.task === "Edit Employee Position") {
+            editEmployee();
+        } else if (response.task === "Exit") {
+            exit();
+        }
+    }))
+}
+
+
+// view all departments
+function viewDepartments() {
+    connectMysql.query("SELECT * FROM department", function (err, res) {
+        console.table(res);
+        firstQuestion()
+    })
+}
